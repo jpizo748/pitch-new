@@ -1,0 +1,295 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom fonts and styling */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+* {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Print styles for PDF export */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 0.5in;
+  }
+  
+  body {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    color-adjust: exact;
+  }
+  
+  .print-mode {
+    background: white !important;
+    color: black !important;
+    overflow: visible;
+    height: auto !important;
+    min-height: auto !important;
+  }
+  
+  .print-slides-container {
+    display: block !important;
+    position: static !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+  
+  .print-slide {
+    display: block !important;
+    position: static !important;
+    transform: none !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 95vh !important;
+    page-break-inside: avoid;
+    page-break-after: always;
+    padding: 2rem 1rem !important;
+    margin: 0 !important;
+    background: white !important;
+    color: black !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+  
+  .print-slide:last-child {
+    page-break-after: auto;
+  }
+  
+  .no-print {
+    display: none !important;
+    visibility: hidden !important;
+  }
+
+  /* Force all backgrounds to white and text to black for print */
+  .print-slide *,
+  .print-slide div,
+  .print-slide section,
+  .print-slide header,
+  .print-slide main {
+    background: white !important;
+    background-color: white !important;
+    background-image: none !important;
+    background-gradient: none !important;
+  }
+  
+  .print-slide h1,
+  .print-slide h2,
+  .print-slide h3,
+  .print-slide h4,
+  .print-slide h5,
+  .print-slide h6,
+  .print-slide p,
+  .print-slide span,
+  .print-slide div,
+  .print-slide li {
+    color: black !important;
+  }
+  
+  /* Preserve some color for emphasis but make it print-friendly */
+  .print-slide .text-blue-600,
+  .print-slide .text-purple-600,
+  .print-slide .text-green-600 {
+    color: #1e40af !important;
+  }
+  
+  .print-slide .text-red-600,
+  .print-slide .text-red-800,
+  .print-slide .text-red-900 {
+    color: #dc2626 !important;
+  }
+  
+  .print-slide .text-yellow-800,
+  .print-slide .text-yellow-900 {
+    color: #92400e !important;
+  }
+  
+  /* Remove all shadows and effects */
+  .print-slide * {
+    box-shadow: none !important;
+    text-shadow: none !important;
+    filter: none !important;
+    backdrop-filter: none !important;
+    border-radius: 8px !important;
+  }
+  
+  /* Ensure images are visible and properly sized */
+  .print-slide svg,
+  .print-slide img {
+    max-width: 100% !important;
+    height: auto !important;
+    display: block !important;
+    visibility: visible !important;
+  }
+  
+  /* Grid layouts for print */
+  .print-slide .grid {
+    display: block !important;
+  }
+  
+  .print-slide .grid > * {
+    margin-bottom: 1rem !important;
+    display: block !important;
+    width: 100% !important;
+  }
+  
+  /* Prevent page breaks inside important content */
+  .print-slide .space-y-8,
+  .print-slide .space-y-6,
+  .print-slide .space-y-4 {
+    page-break-inside: avoid;
+  }
+  
+  /* Ensure proper spacing */
+  .print-slide .space-y-8 > * + * {
+    margin-top: 2rem !important;
+  }
+  
+  .print-slide .space-y-4 > * + * {
+    margin-top: 1rem !important;
+  }
+  
+  .print-slide .space-y-6 > * + * {
+    margin-top: 1.5rem !important;
+  }
+}
+
+/* Smooth transitions */
+.slide-enter {
+  opacity: 0;
+  transform: translateX(100%);
+}
+
+.slide-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 300ms, transform 300ms;
+}
+
+.slide-exit {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.slide-exit-active {
+  opacity: 0;
+  transform: translateX(-100%);
+  transition: opacity 300ms, transform 300ms;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #E96D9E;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #d63384;
+}
+
+/* Responsive typography */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2.5rem !important;
+  }
+  
+  h2 {
+    font-size: 2rem !important;
+  }
+  
+  h3 {
+    font-size: 1.5rem !important;
+  }
+  
+  p {
+    font-size: 1rem !important;
+  }
+}
+
+/* Animation utilities */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.6s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-slide-in {
+  animation: slideIn 0.6s ease-out;
+}
+
+/* Hover effects */
+.hover-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.hover-scale:hover {
+  transform: scale(1.05);
+  transition: transform 0.3s ease;
+}
+
+/* Gamification elements */
+.progress-ring {
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+}
+
+.progress-ring-fill {
+  stroke-dasharray: 283;
+  stroke-dashoffset: 283;
+  transition: stroke-dashoffset 0.5s ease-in-out;
+}
+
+/* Mobile optimizations */
+@media (max-width: 640px) {
+  .mobile-stack {
+    flex-direction: column;
+  }
+  
+  .mobile-text-center {
+    text-align: center;
+  }
+  
+  .mobile-p-4 {
+    padding: 1rem;
+  }
+  
+  .mobile-text-sm {
+    font-size: 0.875rem;
+  }
+}
